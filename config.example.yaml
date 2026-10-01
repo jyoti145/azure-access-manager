@@ -1,0 +1,66 @@
+# Azure Access Manager configuration (template)
+# ---------------------------------------------------------------------------
+# Copy this file to config.yaml (the UI does this automatically on first run).
+#
+# NEVER put passwords, client secrets or tokens in this file. Authentication
+# comes from 'az login' (or the browser sign-in in the UI), or the
+# AZURE_TENANT_ID / AZURE_CLIENT_ID / AZURE_CLIENT_SECRET environment variables.
+#
+# Validate offline with:   python azure_manager.py validate
+# Preview changes with:    python azure_manager.py setup --dry-run
+# Or use the UI:           python azure_manager.py ui
+# ---------------------------------------------------------------------------
+
+# Target subscription. Leave empty when using the UI (you pick it there), or
+# pass --subscription / set AZURE_SUBSCRIPTION_ID for the command line.
+subscription_id: ""
+
+# Optional: fail fast if you are signed in to a different tenant.
+# tenant_id: ""
+
+# Values applied to every user unless the user overrides them.
+defaults:
+  location: "centralindia"          # used when a resource group must be created
+  invite_if_missing: false          # never invite external users unless explicitly enabled
+  send_invitation_email: true
+  invite_redirect_url: "https://myapplications.microsoft.com"
+
+# Add users here, or with the "Users & access" page in the UI.
+users: []
+
+# Examples:
+#
+# users:
+#   # Own resource group + Contributor + monthly budget.
+#   - name: "John Doe"
+#     email: "john@example.com"
+#     invite_if_missing: true        # send a B2B guest invitation if John is not in the tenant
+#     resource_group:
+#       name: "rg-john"
+#       location: "centralindia"
+#       create_if_missing: true
+#     access:
+#       scope_type: "resource_group" # management_group | subscription | resource_group | resource
+#       role: "Contributor"          # any built-in or custom role name
+#     budget:
+#       enabled: true
+#       amount: 1000                 # in your subscription's billing currency
+#       currency: "INR"              # display/check only, never converted
+#       period: "monthly"            # monthly | quarterly | annually
+#       thresholds: [50, 75, 90, 100]
+#       notifications:
+#         emails: ["admin@example.com"]
+#
+#   # Read-only access to the whole subscription.
+#   - name: "Alice"
+#     email: "alice@example.com"
+#     access:
+#       scope_type: "subscription"
+#       role: "Reader"
+
+# Write reports/subscription-report-YYYY-MM-DD.{json,csv} after 'setup'.
+subscription_report:
+  enabled: true
+  include_resources: true
+  include_costs: true
+  include_rbac: true

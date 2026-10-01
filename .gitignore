@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+logs/*
+!logs/.gitkeep
+reports/*
+!reports/.gitkeep
+
+# Personal configuration (subscription IDs, emails). Share config.example.yaml instead.
+config.yaml
+config.json
+*.bak

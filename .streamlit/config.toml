@@ -1,0 +1,10 @@
+# The UI acts with the Azure login of the computer it runs on, so it must never be
+# reachable from the network. Each person runs it on their own machine.
+[server]
+address = "localhost"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
